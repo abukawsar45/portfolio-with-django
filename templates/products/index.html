@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %} Products {% endblock %}
+{% block content %}
+  <!-- Navbar -->
+<container class="m-4 p-3" >
+  <div class="table-responsive p-3">
+  <table class="table">
+  <caption>List of users</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mouse</td>
+      <td>4550</td>
+      <td>1</td>
+      <td>Wireless</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Mouse</td>
+      <td>4550</td>
+      <td>1</td>
+      <td>Wireless</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</container>
+
+{% endblock %}
