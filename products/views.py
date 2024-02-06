@@ -1,10 +1,11 @@
-
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from products.models import Product
 
 
 
+@login_required(login_url="/accounts/login/")
 def index(request):
   products = Product.objects.filter(author=request.user)
   context={
@@ -15,6 +16,7 @@ def index(request):
   return render(request, "products/index.html", context )
 
 # Create product
+@login_required(login_url="/accounts/login/")
 def create_product(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -36,6 +38,7 @@ def create_product(request):
     return render(request, 'products/create.html')
 
 # details page
+@login_required(login_url="/accounts/login/")
 def product_details(request, pk):
    product = Product.objects.filter(id=pk, author=request.user).first()
 
@@ -47,6 +50,7 @@ def product_details(request, pk):
 
 
 # update method
+@login_required(login_url="/accounts/login/")
 def update_product(request, pk):
    product = Product.objects.filter(id=pk, author=request.user).first()
    if not product:
@@ -70,6 +74,7 @@ def update_product(request, pk):
     
 
 # delete method
+@login_required(login_url="/accounts/login/")
 def delete_product(request, pk):
     product = Product.objects.filter(id=pk, author=request.user).first()
 
