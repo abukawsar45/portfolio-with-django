@@ -6,7 +6,7 @@ from products.models import Product
 
 
 def index(request):
-  products = Product.objects.all()
+  products = Product.objects.filter(author=request.user)
   context={
      'products' : products
   }
@@ -14,7 +14,7 @@ def index(request):
 
   return render(request, "products/index.html", context )
 
-
+# Create product
 def create_product(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -28,7 +28,8 @@ def create_product(request):
             price=price,
             quantity=quantity,
             description=description,
-            cover=cover
+            cover=cover,
+            author=request.user
         )
         product.save()
         return redirect('products:index')
@@ -36,7 +37,7 @@ def create_product(request):
 
 # details page
 def product_details(request, pk):
-   product = Product.objects.filter(id=pk).first()
+   product = Product.objects.filter(id=pk, author=request.user).first()
 
    if not product:
         return HttpResponse('Product not found')
@@ -47,7 +48,7 @@ def product_details(request, pk):
 
 # update method
 def update_product(request, pk):
-   product = Product.objects.filter(id=pk).first()
+   product = Product.objects.filter(id=pk, author=request.user).first()
    if not product:
     return HttpResponse("Product not found")
    

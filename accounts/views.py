@@ -9,15 +9,29 @@ def signin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if not User.objects.filter(username=username).exists():
-            return HttpResponse(status=404)
-        authenticate(request, username=username, password=password)
-        return redirect('base:base')
-    return render(request, template_name='accounts/login.html')
+        user = authenticate(username=username, password=password)
+
+        # Checking if user is valid
+        print(user)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+
+        else:
+            return redirect('accounts:login')
+    else:
+        if request.user.is_authenticated:
+            return redirect('/')
+        else:
+            return render(request, 'accounts/login.html')
+
+
+
 
 
 def signout(request):
-    return redirect('accounts:signup')
+    logout(request)
+    return redirect('accounts:login')
 
 
 def signup(request):
@@ -29,8 +43,10 @@ def signup(request):
         if password != confirm_password:
             return HttpResponse('Passwords do not match')
         user = User.objects.create_user(username=username, email=email, password=password)
-        user.is_active = False
+        
         user.save()
+        
+        print('lineeeee:', user)
 
 
         if not user:

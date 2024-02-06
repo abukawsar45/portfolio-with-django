@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -7,6 +8,8 @@ class Product(models.Model):
     quantity = models.IntegerField(default=10, blank=True)
     cover = models.ImageField(upload_to='product_image/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
 
     def __str__(self):
         return self.name
