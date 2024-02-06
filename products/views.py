@@ -5,6 +5,7 @@ from products.models import *
 
 
 
+
 @login_required(login_url="/accounts/login/")
 def index(request):
   products = Product.objects.filter(author=request.user)
@@ -69,6 +70,7 @@ def update_product(request, pk):
       product.price = request.POST.get('price', product.price)
       product.quantity = request.POST.get('quantity', product.quantity)
       product.description = request.POST.get('description', product.description)
+      product.category_id = request.POST.get('category_id', product.category_id)
       if request.FILES.get('cover', product.cover):
          product.cover = request.FILES.get('cover', product.cover)
       product.save()
