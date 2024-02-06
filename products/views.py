@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from products.models import Product
+from products.models import *
 
 
 
@@ -9,7 +9,7 @@ from products.models import Product
 def index(request):
   products = Product.objects.filter(author=request.user)
   context={
-     'products' : products
+     'products' : products,
   }
   
 
@@ -24,6 +24,8 @@ def create_product(request):
         quantity = request.POST.get('quantity')
         description = request.POST.get('description')
         cover = request.FILES.get('cover')
+        category_id = request.POST.get('category_id')
+
 
         product = Product(
             name=name,
@@ -31,11 +33,17 @@ def create_product(request):
             quantity=quantity,
             description=description,
             cover=cover,
-            author=request.user
+            author=request.user,
+            category_id=category_id
         )
         product.save()
         return redirect('products:index')
-    return render(request, 'products/create.html')
+    
+    categories = Category.objects.all()
+    context = {
+        'categories' : categories
+    }
+    return render(request, 'products/create.html',context)
 
 # details page
 @login_required(login_url="/accounts/login/")
@@ -65,9 +73,10 @@ def update_product(request, pk):
          product.cover = request.FILES.get('cover', product.cover)
       product.save()
       return redirect('products:index')
-
+   categories = Category.objects.all()
    context = {
-       'product': product
+       'product': product,
+        'categories' : categories
     }
    return render(request, 'products/update.html', context )
        

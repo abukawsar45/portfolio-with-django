@@ -30,8 +30,6 @@ def signin(request):
 
 
 
-
-
 def signout(request):
     logout(request)
     return redirect('accounts:login')
