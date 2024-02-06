@@ -27,12 +27,12 @@
         {% for product in products %}
         <tr>
           <td class="" scope="row"><h6>{{ forloop.counter }}</h6></td>
-          <td class=""><h6>{{ product.name }}</h6></td>
+          <td class=""><a href="{% url 'products:product_details' product.id %}">{{ product.name }}</a></td>
           <td class=""><h6>{{ product.price }} BDT</h6></td>
           <td class=""><h6>{{ product.quantity }}</h6></td>
           <td class="">
             <div class="d-flex align-items-center gap-2">
-              <a href="" class="btn btn-info btn-sm">Edit</a>
+              <a href="{% url 'products:update_product' product.id %}"  class="btn btn-info btn-sm">Edit</a>
               <a href="{% url 'products:delete_product' product.id %}" class="btn btn-danger btn-sm">Delete</a>
             </div>
           </td>

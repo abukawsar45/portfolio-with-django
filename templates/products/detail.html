@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block title %}Products Details{% endblock %}
+{% block content %}
+ <div class="row">
+  <div class="row">
+        <div class="d-flex align-items-stretch">
+            <div class="card w-100">
+                <div class="card-body">
+                    <h5 class="mb-3">Product details</h5>
+                    <br>
+                    <p>Product Image</p>
+                    {% if product.cover %}
+                    <img src="{{ product.cover.url }}" alt="{{ product.name }}" height="100" width="100">
+                    <a href="{{ product.cover.url }}" target="_blank" download>Download</a>
+                    {% else %}
+                    <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" height="100" width="100" alt="{{ product.name }}">
+                    {% endif %}
+                    <br>
+                    <p>Product Name</p>
+                    <h5>{{ product.name }}</h5>
+                    <br>
+                    <p>Product Category</p>
+                    <h5>{{ product.category.name }}</h5>
+                    <br>
+                    <p>Product Price</p>
+                    <h5>{{ product.price }}</h5><br>
+                    <p>Product Quantity</p>
+                    <h5>{{ product.quantity }}</h5><br>
+                    <p>Product Description</p>
+                    <h5>{{ product.description }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+{% endblock %}
